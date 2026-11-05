@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portafolio · Proyectos y Reconocimientos</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="brand">Mi <span>Portafolio</span></div>
+</header>
+<main>
+  <div class="hero">
+    <h1>Proyectos y reconocimientos</h1>
+    <p>Una selección de trabajo realizado y el reconocimiento recibido.</p>
+    <div class="actions" id="actions"></div>
+  </div>
+  <div class="chips">
+    <button class="chip active" data-filter="all">Todo</button>
+    <button class="chip" data-filter="project">Proyectos</button>
+    <button class="chip" data-filter="award">Reconocimientos</button>
+  </div>
+  <div id="grid" class="grid"></div>
+  <div id="empty" class="empty" hidden>Próximamente se mostrarán aquí los proyectos.</div>
+</main>
+<dialog id="modal"><button class="close" id="closeModal" aria-label="Cerrar">✕</button><div id="modalBody"></div></dialog>
+<div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

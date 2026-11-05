@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administrar · Portafolio</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="brand">Panel <span>de administración</span></div>
+  <div><a href="index.html" class="btn outline">Ver portafolio</a>
+  <button class="btn danger" id="logout" hidden>Salir</button></div>
+</header>
+<main>
+  <section id="login" class="panel" style="max-width:380px;margin:40px auto">
+    <h2>Iniciar sesión</h2>
+    <form id="loginForm">
+      <label>Correo <input name="email" type="email" required></label>
+      <label>Contraseña <input name="password" type="password" required></label>
+      <button class="btn" type="submit">Entrar</button>
+    </form>
+  </section>
+
+  <section id="panel" hidden>
+    <div class="panel">
+      <h2>Perfil y contacto</h2>
+      <form id="profileForm">
+        <div class="row2">
+          <label>Nombre completo <input name="name"></label>
+          <label>Correo de contacto <input name="email" type="email"></label>
+        </div>
+        <label>Currículum (PDF o Word) <input type="file" id="cvFile" accept=".pdf,.doc,.docx"></label>
+        <small id="cvStatus" style="color:var(--muted)"></small>
+        <button class="btn" type="submit" style="justify-self:start">Guardar perfil</button>
+      </form>
+    </div>
+
+    <div class="admin-grid">
+      <div class="panel">
+        <h2>Nuevo elemento</h2>
+        <form id="itemForm">
+          <div class="row2">
+            <label>Tipo
+              <select name="type" required>
+                <option value="project">Proyecto</option>
+                <option value="award">Reconocimiento</option>
+              </select>
+            </label>
+            <label>Fecha <input type="date" name="date"></label>
+          </div>
+          <label>Título <input name="title" required maxlength="120"></label>
+          <label>Descripción <textarea name="description" maxlength="2000"></textarea></label>
+          <label>Imagen (subir archivo) <input type="file" id="imageFile" accept="image/*"></label>
+          <label>o enlace a la imagen <input name="imageUrl" type="url"></label>
+          <label>Enlace relacionado (opcional) <input name="link" type="url"></label>
+          <button class="btn" id="saveBtn" type="submit">Publicar</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Publicados</h2>
+        <div id="list" class="list"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
