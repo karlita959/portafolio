@@ -8,7 +8,10 @@
 </head>
 <body>
 <header>
-  <a href="admin.html" id="adminLink" class="btn outline" hidden>Administrar</a>
+  <div class="brand">Mi <span>Portafolio</span></div>
+  <div>
+    <a href="admin.html" id="adminLink" class="btn outline" hidden>Administrar</a>
+  </div>
 </header>
 <main>
   <div class="hero">
@@ -17,12 +20,18 @@
     <div class="actions" id="actions"></div>
   </div>
   <div class="chips">
-    <button class="chip active" data-filter="all">Todo</button>
-    <button class="chip" data-filter="project">Proyectos</button>
-    <button class="chip" data-filter="award">Reconocimientos</button>
+    <button class="chip active" data-filter="all">todo</button>
+    <button class="chip" data-filter="project">proyectos</button>
+    <button class="chip" data-filter="award">reconocimientos</button>
   </div>
   <div id="grid" class="grid"></div>
   <div id="empty" class="empty" hidden>Próximamente se mostrarán aquí los proyectos.</div>
+
+  <section id="cv" class="panel cv" hidden>
+    <h2>curriculum</h2>
+    <iframe id="cvFrame" title="Currículum" hidden></iframe>
+    <p id="cvNote" class="muted"></p>
+  </section>
 </main>
 <dialog id="modal"><button class="close" id="closeModal" aria-label="Cerrar">✕</button><div id="modalBody"></div></dialog>
 <div id="toast" class="toast"></div>
