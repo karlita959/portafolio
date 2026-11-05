@@ -74,3 +74,6 @@ $('#closeModal').addEventListener('click', () => $('#modal').close());
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') $('#modal').close(); });
 
 load();
+sb.auth.getSession().then(({ data: { session } }) => {
+  $('#adminLink').hidden = !session;
+});
