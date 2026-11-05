@@ -1,7 +1,7 @@
 const sb = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const LABEL = { project: 'Proyecto', award: 'Reconocimiento' };
+const LABEL = { project: 'proyecto', award: 'reconocimiento' };
 const fmtDate = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('es-MX', { year: 'numeric', month: 'long' }) : '';
 let items = [], filter = 'all';
 
@@ -10,7 +10,7 @@ function toast(msg, isErr) {
   t.textContent = msg;
   t.className = 'toast show' + (isErr ? ' err' : '');
   clearTimeout(t._h);
-  t._h = setTimeout(() => t.className = 'toast', 3200);
+  t._h = setTimeout(() => t.className = 'toast' + (isErr ? ' err' : ''), 3200);
 }
 
 function renderGrid() {
@@ -35,6 +35,22 @@ function renderActions(p) {
   $('#actions').innerHTML = parts.join('');
 }
 
+function renderCv(p) {
+  const sec = $('#cv'), frame = $('#cvFrame'), note = $('#cvNote');
+  if (!p.cv_url) { sec.hidden = true; return; }
+  sec.hidden = false;
+  const isPdf = /\.pdf$/i.test(p.cv_name || p.cv_url);
+  if (isPdf) {
+    frame.src = p.cv_url;
+    frame.hidden = false;
+    note.textContent = '';
+  } else {
+    frame.hidden = true;
+    frame.removeAttribute('src');
+    note.innerHTML = `La vista previa solo está disponible para PDF. <a href="${esc(p.cv_url)}" download style="color:var(--accent)">Descargar archivo</a>`;
+  }
+}
+
 function openItem(id) {
   const it = items.find(i => i.id === id);
   if (!it) return;
@@ -50,6 +66,11 @@ function openItem(id) {
   $('#modal').showModal();
 }
 
+async function checkSession() {
+  const { data: { session } } = await sb.auth.getSession();
+  $('#adminLink').hidden = !session;
+}
+
 async function load() {
   const [profile, rows] = await Promise.all([
     sb.from('profile').select('*').eq('id', 1).single(),
@@ -58,6 +79,7 @@ async function load() {
   if (rows.error) return toast('No se pudo cargar el portafolio', true);
   items = rows.data;
   renderActions(profile.data || {});
+  renderCv(profile.data || {});
   renderGrid();
 }
 
@@ -73,7 +95,6 @@ $('#grid').addEventListener('click', e => {
 $('#closeModal').addEventListener('click', () => $('#modal').close());
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') $('#modal').close(); });
 
+checkSession();
 load();
-sb.auth.getSession().then(({ data: { session } }) => {
-  $('#adminLink').hidden = !session;
-});
+ 
